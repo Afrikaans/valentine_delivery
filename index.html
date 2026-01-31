@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine's Delivery – Kenyatta University</title>
+<style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,#ffeef8 0%,#ffe0ec 50%,#fff0f3 100%);min-height:100vh;padding:20px;position:relative;overflow-x:hidden;}
+    .hearts{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0;}
+    .heart{position:absolute;font-size:20px;color:rgba(255,182,193,0.4);animation:float 10s infinite ease-in;bottom:-100px;}
+    @keyframes float{0%{transform:translateY(0) rotate(0deg);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-100vh) rotate(720deg);opacity:0;}}
+    .container{max-width:700px;margin:0 auto;background:white;border-radius:24px;box-shadow:0 20px 60px rgba(220,20,60,0.15);overflow:hidden;position:relative;z-index:1;}
+    .header{background:linear-gradient(135deg,#dc143c 0%,#ff6b6b 100%);color:white;padding:40px 30px;text-align:center;position:relative;}
+    .header::before{content:'❤️';position:absolute;top:20px;left:30px;font-size:30px;opacity:0.3;animation:pulse 2s infinite;}
+    .header::after{content:'❤️';position:absolute;top:20px;right:30px;font-size:30px;opacity:0.3;animation:pulse 2s infinite 1s;}
+    @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+    h1{font-size:28px;margin-bottom:10px;font-weight:700;letter-spacing:-0.5px;}
+    .subtitle{font-size:16px;opacity:0.95;line-height:1.5;max-width:500px;margin:0 auto;}
+    .urgency-badge{display:inline-block;background:rgba(255,255,255,0.2);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;margin-top:15px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);}
+    form{padding:40px 30px;}
+    .section{margin-bottom:35px;padding-bottom:30px;border-bottom:2px dashed #ffe0ec;}
+    .section:last-of-type{border-bottom:none;}
+    .section-title{font-size:18px;color:#dc143c;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:0.5px;}
+    .section-title::before{content:'';display:inline-block;width:4px;height:24px;background:linear-gradient(to bottom,#dc143c,#ff6b6b);border-radius:2px;}
+    .form-group{margin-bottom:20px;}
+    label{display:block;font-weight:600;color:#333;margin-bottom:8px;font-size:14px;}
+    .required::after{content:' *';color:#dc143c;}
+    input[type="text"],input[type="tel"],textarea,select{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;transition:all 0.3s ease;font-family:inherit;}
+    input[type="text"]:focus,input[type="tel"]:focus,textarea:focus,select:focus{outline:none;border-color:#ff6b6b;box-shadow:0 0 0 4px rgba(255,107,107,0.1);}
+    textarea{resize:vertical;min-height:100px;}
+    .radio-group,.checkbox-group{display:flex;flex-direction:column;gap:12px;}
+    .radio-item,.checkbox-item{display:flex;align-items:center;padding:16px;border:2px solid #e0e0e0;border-radius:12px;cursor:pointer;transition:all 0.3s ease;background:#fafafa;position:relative;overflow:hidden;}
+    .radio-item::before,.checkbox-item::before{content:'';position:absolute;left:0;top:0;height:100%;width:4px;background:#dc143c;transform:scaleY(0);transition:transform 0.3s ease;}
+    .radio-item:hover,.checkbox-item:hover{border-color:#ffb6c1;background:#fff5f7;transform:translateX(5px);}
+    .radio-item.selected,.checkbox-item.selected{border-color:#dc143c;background:#fff0f3;}
+    .radio-item.selected::before,.checkbox-item.selected::before{transform:scaleY(1);}
+    input[type="radio"],input[type="checkbox"]{margin-right:12px;width:20px;height:20px;accent-color:#dc143c;cursor:pointer;}
+    .price-tag{margin-left:auto;font-weight:700;color:#dc143c;font-size:16px;}
+    .dynamic-total{background:linear-gradient(135deg,#dc143c 0%,#ff6b6b 100%);color:white;padding:25px;border-radius:16px;text-align:center;margin:30px 0;box-shadow:0 10px 30px rgba(220,20,60,0.2);position:sticky;bottom:20px;z-index:10;}
+    .dynamic-total h3{font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;opacity:0.9;}
+    .total-amount{font-size:36px;font-weight:800;margin:10px 0;}
+    .payment-info{background:#fff8dc;border:2px solid #ffd700;border-radius:12px;padding:20px;margin:20px 0;}
+    .payment-info strong{color:#856404;display:block;margin-bottom:5px;}
+    .rules-box{background:#f8f9fa;border:2px solid #dee2e6;border-radius:12px;padding:20px;margin-top:20px;}
+    .checkbox-wrapper{display:flex;align-items:start;gap:12px;margin-top:15px;}
+    .checkbox-wrapper input[type="checkbox"]{margin-top:3px;}
+    .checkbox-wrapper label{margin:0;font-weight:400;line-height:1.5;cursor:pointer;}
+    .submit-btn{width:100%;padding:18px;background:linear-gradient(135deg,#dc143c 0%,#ff4757 100%);color:white;border:none;border-radius:14px;font-size:18px;font-weight:700;cursor:pointer;transition:all 0.3s ease;margin-top:30px;text-transform:uppercase;letter-spacing:1px;box-shadow:0 10px 30px rgba(220,20,60,0.3);}
+    .submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 15px 40px rgba(220,20,60,0.4);}
+    .submit-btn:disabled{opacity:0.6;cursor:not-allowed;background:#ccc;}
+    .word-count{font-size:12px;color:#666;text-align:right;margin-top:5px;}
+    .word-count.warning{color:#ff4757;font-weight:600;}
+    .success-message{display:none;background:#d4edda;color:#155724;padding:50px 30px;text-align:center;border-radius:24px;}
+    .success-message h2{font-size:32px;margin-bottom:15px;color:#28a745;}
+    @media(max-width:600px){.container{margin:0;border-radius:0;}body{padding:0;}form{padding:30px 20px;}h1{font-size:24px;}}
+</style>
+<base target="_blank">
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<div class="container">
+<div class="header">
+<h1>Valentine's Delivery ❤️</h1>
+<p class="subtitle">Fresh home-baked cupcakes & cakes, chocolates and flowers delivered on campus at Kenyatta University.</p>
+<div class="urgency-badge">⚠️ Limited Slots Available</div>
+</div>
+
+<form id="orderForm">
+<!-- Customer -->
+<div class="section"><div class="section-title">Customer Details</div>
+<div class="form-group"><label for="customerName" class="required">Your Full Name</label><input type="text" id="customerName" name="customerName" required></div>
+<div class="form-group"><label for="customerPhone" class="required">Phone Number (M-Pesa)</label><input type="tel" id="customerPhone" name="customerPhone" placeholder="07XX XXX XXX" required></div>
+<div class="form-group"><label for="customerLocation" class="required">Your Hostel / Location</label><input type="text" id="customerLocation" name="customerLocation" required></div></div>
+
+<!-- Recipient -->
+<div class="section"><div class="section-title">Recipient Details</div>
+<div class="form-group"><label for="recipientName" class="required">Recipient's Name</label><input type="text" id="recipientName" name="recipientName" required></div>
+<div class="form-group"><label for="recipientPhone" class="required">Recipient's Phone Number</label><input type="tel" id="recipientPhone" name="recipientPhone" placeholder="07XX XXX XXX" required></div>
+<div class="form-group"><label for="recipientLocation" class="required">Recipient's Hostel / Location</label><input type="text" id="recipientLocation" name="recipientLocation" required></div></div>
+
+<!-- Packages -->
+<div class="section"><div class="section-title">Choose Your Package</div>
+<div class="radio-group">
+<label class="radio-item"><input type="radio" name="package" value="sweet_gesture" required><span class="package-name">Sweet Gesture</span><span class="price-tag">KSh 600</span></label>
+<label class="radio-item"><input type="radio" name="package" value="cupcake_crush" required><span class="package-name">Cupcake Crush</span><span class="price-tag">KSh 1,100</span></label>
+<label class="radio-item"><input type="radio" name="package" value="mini_cake_date" required><span class="package-name">Mini Cake Date</span><span class="price-tag">KSh 1,900</span></label>
+</div></div>
+
+<!-- Addons -->
+<div class="section"><div class="section-title">Add-ons (Optional)</div>
+<div class="checkbox-group">
+<label class="checkbox-item"><input type="checkbox" name="addons" value="extra_cupcake"><span>Extra Cupcake</span><span class="price-tag">+KSh 250</span></label>
+<label class="checkbox-item"><input type="checkbox" name="addons" value="soda"><span>Soda</span><span class="price-tag">+KSh 150</span></label>
+<label class="checkbox-item"><input type="checkbox" name="addons" value="smoothie"><span>Smoothie</span><span class="price-tag">+KSh 300</span></label>
+<label class="checkbox-item"><input type="checkbox" name="addons" value="anonymous"><span>Anonymous Delivery</span><span class="price-tag">+KSh 150</span></label>
+</div></div>
+
+<!-- Message -->
+<div class="section"><div class="section-title">Personal Message</div>
+<div class="form-group"><label for="message">Message to be written on the note</label><textarea id="message" name="message" placeholder="Write something sweet..." maxlength="150"></textarea>
+<div class="word-count" id="wordCount">0/25 words</div></div></div>
+
+<!-- Total -->
+<div class="dynamic-total"><h3>Total Amount</h3><div class="total-amount" id="totalAmount">KSh 0</div><div style="font-size:14px;opacity:0.9;">Select a package to see total</div></div>
+
+<!-- Payment -->
+<div class="section"><div class="section-title">Payment Confirmation</div>
+<div class="payment-info"><strong>📱 M-Pesa Payment Details:</strong>
+<p>Pay to: <strong>07XX XXX XXX (Your Name)</strong></p>
+<p>Amount: <span id="paymentAmount" style="color:#dc143c;font-weight:bold;">Select package first</span></p></div>
+<div class="form-group"><label for="mpesaCode" class="required">M-Pesa Transaction Code</label><input type="text" id="mpesaCode" name="mpesaCode" placeholder="e.g., QJ7XXXHT" required></div></div>
+
+<!-- Rules -->
+<div class="section"><div class="section-title">Terms & Conditions</div>
+<div class="rules-box">
+<div class="checkbox-wrapper"><input type="checkbox" id="confirmPayment" required><label for="confirmPayment">I understand that <strong>payment confirms my order</strong></label></div>
+<div class="checkbox-wrapper"><input type="checkbox" id="confirmCustomization" required><label for="confirmCustomization">I accept that there is <strong>no customization beyond the packages</strong> offered</label></div>
+<div class="checkbox-wrapper"><input type="checkbox" id="confirmDelivery" required><label for="confirmDelivery">I understand delivery will be on <strong>14th Feb within set time slots</strong></label></div>
+</div></div>
+
+<button type="submit" class="submit-btn" id="submitBtn">Complete Order ❤️</button>
+</form>
+
+<div class="success-message" id="successMessage">
+<h2>Order Received! ❤️</h2>
+<p>We've sent a confirmation to your phone.<br>Get ready to make someone's Valentine's Day special!</p>
+</div>
+</div>
+
+<script>
+const packages = { sweet_gesture: 600, cupcake_crush: 1100, mini_cake_date: 1900 };
+const addons = { extra_cupcake: 100, soda: 150, anonymous: 150 };
+let basePrice=0, addonTotal=0;
+
+function updateTotal(){const total=basePrice+addonTotal;document.getElementById('totalAmount').textContent='KSh '+total.toLocaleString();document.getElementById('paymentAmount').textContent='KSh '+total.toLocaleString();document.getElementById('submitBtn').disabled=basePrice===0;}
+
+document.querySelectorAll('.radio-item').forEach(label=>label.addEventListener('click',()=>{const input=label.querySelector('input[type="radio"]');input.checked=true;document.querySelectorAll('.radio-item').forEach(l=>l.classList.remove('selected'));label.classList.add('selected');basePrice=packages[input.value]||0;updateTotal();}));
+
+document.querySelectorAll('.checkbox-item').forEach(label=>label.addEventListener('click',e=>{if(e.target.tagName==='INPUT')return;const checkbox=label.querySelector('input[type="checkbox"]');checkbox.checked=!checkbox.checked;if(checkbox.checked){label.classList.add('selected');addonTotal+=addons[checkbox.value]||0;}else{label.classList.remove('selected');addonTotal-=addons[checkbox.value]||0;}updateTotal();}));
+
+const msgInput=document.getElementById('message');const wcDisplay=document.getElementById('wordCount');
+msgInput.addEventListener('input',()=>{const words=msgInput.value.trim().split(/\s+/).filter(w=>w).length;wcDisplay.textContent=words+'/25 words';wcDisplay.classList.toggle('warning',words>25);});
+
+// Floating hearts
+function createHearts(){const container=document.getElementById('hearts');const hearts=['❤️','💖','💝','💕','🌸'];setInterval(()=>{if(container.children.length>30)return;const h=document.createElement('div');h.className='heart';h.textContent=hearts[Math.floor(Math.random()*hearts.length)];h.style.left=Math.random()*100+'%';h.style.animationDuration=(Math.random()*5+8)+'s';container.appendChild(h);setTimeout(()=>h.remove(),13000);},800);}
+createHearts();
+
+// Form submit
+document.getElementById('orderForm').addEventListener('submit',e=>{e.preventDefault();const words=msgInput.value.trim().split(/\s+/).filter(w=>w).length;if(words>25&&!confirm(`Your message is ${words} words. Continue anyway?`))return;const btn=document.getElementById('submitBtn');btn.textContent='Processing...';btn.disabled=true;setTimeout(()=>{document.getElementById('orderForm').style.display='none';document.querySelector('.dynamic-total').style.display='none';document.getElementById('successMessage').style.display='block';console.log('Order Data:',Object.fromEntries(new FormData(orderForm)));},1500);});
+
+// Prevent enter
+document.addEventListener('keypress',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA')e.preventDefault();});
+</script>
+</body>
+</html>
